@@ -1,0 +1,155 @@
+/* BASE VARIABLES - "Ethereal Sanctuary" Theme */
+:root {
+  /* COLORS */
+  /* COLORS - Midnight Black & Gold */
+  --void-bg: #0a0a0c; /* Deep Charcoal/Midnight */
+  --void-deep: #050505;
+
+  --gold-primary: #e5c37a;
+  --gold-light: #ffdda1;
+  --gold-dim: #8a7a5a;
+  --gold-glow: rgba(229, 195, 122, 0.3);
+
+  --starlight: #ffffff;
+  --starlight-dim: rgba(255, 255, 255, 0.7);
+  --starlight-muted: rgba(255, 255, 255, 0.4);
+
+  --glass-surface: rgba(22, 22, 24, 0.6);
+  --glass-strong: rgba(22, 22, 24, 0.85);
+  --glass-border: rgba(229, 195, 122, 0.15); /* Thin gold border */
+
+  --success: #4cd964;
+  --error: #ff3b30;
+
+  /* SPACING & LAYOUT */
+  --safe-area-top: env(safe-area-inset-top, 20px);
+  --safe-area-bottom: env(safe-area-inset-bottom, 20px);
+  --header-height: 60px;
+  --tab-bar-height: 80px;
+
+  /* FONTS */
+  --font-heading: 'Cinzel', serif;
+  --font-body: 'Inter', sans-serif; /* Fallback until Outfit is added */
+
+  /* SPACING SYSTEM (Mobile First) */
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --space-xl: 32px;
+  --space-2xl: 48px;
+  --space-3xl: 64px;
+
+  /* LAYOUT */
+  --container-width-md: 768px;
+  --container-width-lg: 1024px;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 20px;
+  --radius-xl: 32px;
+  --radius-full: 9999px;
+}
+
+/* GLOBAL RESET */
+* {
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: var(--void-bg);
+  color: var(--starlight);
+  font-family: var(--font-body);
+  overflow-x: hidden;
+  overscroll-behavior-y: none; /* Prevent bounce */
+}
+
+/* TYPOGRAPHY */
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-heading);
+  color: var(--gold-primary);
+  margin: 0;
+}
+
+h1 {
+  font-size: 32px;
+  font-weight: 700;
+}
+h2 {
+  font-size: 24px;
+  font-weight: 600;
+}
+h3 {
+  font-size: 20px;
+  font-weight: 600;
+}
+
+p {
+  line-height: 1.5;
+  color: var(--starlight-dim);
+}
+
+/* UTILITIES */
+.text-gold {
+  color: var(--gold-primary);
+}
+.text-starlight {
+  color: var(--starlight);
+}
+
+.flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.absolute-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+/* ANIMATIONS */
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.3s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+
+/* SLIDE TRANSITIONS */
+.slide-left-enter-active,
+.slide-left-leave-active,
+.slide-right-enter-active,
+.slide-right-leave-active {
+  transition:
+    transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1),
+    opacity 0.3s ease;
+}
+
+.slide-left-enter-from {
+  transform: translateX(20px);
+  opacity: 0;
+}
+.slide-left-leave-to {
+  transform: translateX(-20px);
+  opacity: 0;
+}
+
+.slide-right-enter-from {
+  transform: translateX(-20px);
+  opacity: 0;
+}
+.slide-right-leave-to {
+  transform: translateX(20px);
+  opacity: 0;
+}

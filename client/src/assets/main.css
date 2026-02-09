@@ -1,0 +1,16 @@
+@import './base.css';
+
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Inter:wght@300;400;500;600&family=Outfit:wght@300;400;500;700&display=swap');
+
+#app {
+  width: 100vw;
+  height: 100vh;
+  /* overflow: hidden; Removed to allow inner scrolling container to work */
+  position: relative;
+}
+
+/* SCROLLBAR HIDING */
+::-webkit-scrollbar {
+  width: 0px;
+  background: transparent;
+}

@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Box of Prayers</string>
+    <string name="title_activity_main">Box of Prayers</string>
+    <string name="package_name">com.prayly.app</string>
+    <string name="custom_url_scheme">com.prayly.app</string>
+</resources>
