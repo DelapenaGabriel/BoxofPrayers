@@ -82,6 +82,16 @@ public class JdbcPostCommentDao implements PostCommentDao {
         }
     }
 
+    @Override
+    public void deleteComment(int commentId) {
+        String sql = "DELETE FROM post_comments WHERE id = ?";
+        try {
+            jdbcTemplate.update(sql, commentId);
+        } catch (CannotGetJdbcConnectionException e) {
+            throw new DaoException("Unable to connect to server or database", e);
+        }
+    }
+
     private PostComment mapRowToComment(SqlRowSet rs) {
         PostComment comment = new PostComment();
         comment.setId(rs.getInt("id"));

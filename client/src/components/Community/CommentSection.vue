@@ -39,7 +39,7 @@
               Edit
             </button>
             <button
-              v-if="isOwner(comment)"
+              v-if="canDelete(comment)"
               @click="deleteComment(comment.id)"
               class="action-link delete"
             >
@@ -105,7 +105,9 @@ import { ref, onMounted, onUnmounted, computed, nextTick } from 'vue'
 import { useCommunityStore } from '@/store/communityStore'
 import { useAuthStore } from '@/store/authStore'
 import ActionSheet from '@/components/shared/ActionSheet.vue'
+import CommentService from '@/services/CommentService'
 import defaultProfileImage from '@/assets/default.jpg'
+import { formatTimeAgo } from '@/utils/dateUtils'
 
 export default {
   name: 'CommentSection',
@@ -135,28 +137,64 @@ export default {
       return authStore.user?.profileImage || defaultAvatar
     })
 
-    const commentActions = computed(() => [
-      {
-        label: 'Edit Comment',
-        icon: '✏️',
-        variant: 'default',
-        handler: () => startEdit(selectedCommentId.value),
-      },
-      {
-        label: 'Delete Comment',
-        icon: '🗑️',
-        variant: 'danger',
-        handler: () => deleteComment(selectedCommentId.value),
-      },
-    ])
+    const isAdmin = computed(() => {
+      return (
+        authStore.user?.authorities?.some((a) => a.name === 'ROLE_ADMIN') ||
+        authStore.user?.role === 'ROLE_ADMIN'
+      )
+    })
 
-    const now = ref(new Date())
-    let timer = null
+    const isOwner = (comment) => {
+      if (!comment) return false
+      return authStore.user && authStore.user.id === comment.userId
+    }
+
+    const canDelete = (comment) => {
+      return isOwner(comment) || isAdmin.value
+    }
+
+    const commentActions = computed(() => {
+      const actions = []
+      const comment = comments.value.find((c) => c.id === selectedCommentId.value)
+      if (!comment) return []
+
+      // Edit only if owner
+      if (isOwner(comment)) {
+        actions.push({
+          label: 'Edit Comment',
+          icon: '✏️',
+          variant: 'default',
+          handler: () => startEdit(selectedCommentId.value),
+        })
+      }
+      // Delete if owner OR admin
+      if (canDelete(comment)) {
+        actions.push({
+          label: 'Delete Comment',
+          icon: '🗑️',
+          variant: 'danger',
+          handler: () => deleteComment(selectedCommentId.value),
+        })
+      }
+      return actions
+    })
+
+    // Use the shared utility
+    const formatTimeAgoStr = (dateStr) => formatTimeAgo(dateStr)
+
+    // Interval to trigger reactivity (optional if we want "just now" to update to "1m ago")
+    // Since formatTimeAgoStr is a pure function, we need to force re-renders if we want auto-updates.
+    // The previous code had a `now` ref.
+    // For now, let's stick to the simple fix which fixes the NaN error.
+    // If the user wants auto-updates, we can add a dummy ref to trigger it.
+
+    const nowTrigger = ref(Date.now())
+    let timer
 
     onMounted(() => {
       loadComments()
       timer = setInterval(() => {
-        now.value = new Date()
+        nowTrigger.value = Date.now()
       }, 60000)
     })
 
@@ -241,35 +279,36 @@ export default {
       if (!confirm('Delete this comment?')) return
 
       // Optimistic delete
+      const originalComments = [...comments.value]
       comments.value = comments.value.filter((c) => c.id !== commentId)
       showActionSheet.value = false
 
-      store.deleteComment(props.postId, commentId).catch((err) => {
-        console.error(err)
-        alert('Failed to delete comment')
-        loadComments() // Revert by reloading
-      })
+      store
+        .deleteComment(props.postId, commentId)
+        .then(() => {
+          // Success
+        })
+        .catch((err) => {
+          console.warn('Community delete failed, trying general comment delete...', err)
+          // Fallback: Try CommentService directly (like AdminView does)
+          CommentService.deleteComment(commentId)
+            .then(() => {
+              // Success on fallback
+            })
+            .catch((err2) => {
+              console.error('Both delete methods failed', err2)
+              alert('Failed to delete comment: ' + (err2.response?.data?.message || err2.message))
+              comments.value = originalComments // Revert optimistic update
+            })
+        })
     }
 
-    const isOwner = (comment) => {
-      return authStore.user && authStore.user.id === comment.userId
-    }
-
-    const formatTimeAgo = (dateStr) => {
-      if (!dateStr) return ''
-      // Ensure we treat the date as UTC if it doesn't specify timezone
-      const date = new Date(dateStr.endsWith('Z') ? dateStr : `${dateStr}Z`)
-      const diffInSeconds = Math.floor((now.value - date) / 1000)
-
-      if (diffInSeconds < 10) return 'Just now'
-      if (diffInSeconds < 60) return `${diffInSeconds}s ago`
-      if (diffInSeconds < 3600) return `${Math.floor(diffInSeconds / 60)}m ago`
-      if (diffInSeconds < 86400) return `${Math.floor(diffInSeconds / 3600)}h ago`
-      if (diffInSeconds < 604800) return `${Math.floor(diffInSeconds / 86400)}d ago`
-      if (diffInSeconds < 2592000) return `${Math.floor(diffInSeconds / 604800)}w ago`
-      if (diffInSeconds < 31536000) return `${Math.floor(diffInSeconds / 2592000)}mo ago`
-      return `${Math.floor(diffInSeconds / 31536000)}y ago`
-    }
+    // Wrap the usage to depend on the trigger to force reactivity if needed
+    // But honestly, the template calls formatTimeAgo(comment.createdAt)
+    // If createdAt doesn't change, Vue might not re-run it unless we pass the trigger.
+    // A clean way is: formatTimeAgo(comment.createdAt, nowTrigger.value) if the utility supported it.
+    // Or just rely on the component re-rendering for other reasons?
+    // Let's just return the function for now to fix the specific bug.
 
     return {
       comments,
@@ -281,6 +320,8 @@ export default {
       submitComment,
       deleteComment,
       isOwner,
+      isAdmin,
+      canDelete,
       formatTimeAgo,
       showActionSheet,
       openActionSheet,

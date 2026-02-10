@@ -93,7 +93,14 @@ public class CommunityController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteComment(@PathVariable int commentId, Principal principal) {
         int userId = getCurrentUserId(principal);
-        commentDao.deleteComment(commentId, userId);
+        User user = userDao.getUserByEmail(principal.getName());
+        boolean isAdmin = "ROLE_ADMIN".equals(user.getRole());
+
+        if (isAdmin) {
+             commentDao.deleteComment(commentId);
+        } else {
+             commentDao.deleteComment(commentId, userId);
+        }
     }
 
     @PostMapping("/posts/{postId}/react")

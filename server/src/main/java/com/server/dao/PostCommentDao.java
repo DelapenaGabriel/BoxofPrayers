@@ -8,4 +8,5 @@ public interface PostCommentDao {
     PostComment createComment(PostComment comment);
     PostComment getCommentById(int commentId);
     void deleteComment(int commentId, int userId);
+    void deleteComment(int commentId);
 }

@@ -48,7 +48,7 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        target: 'http://localhost:8080', // Local backend
+        target: 'https://boxofprayers.onrender.com', 
         changeOrigin: true,
         secure: false,
       },
