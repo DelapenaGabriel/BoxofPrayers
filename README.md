@@ -1,50 +1,143 @@
-# 🙏 Prayly
+<div align="center">
+  <!-- Logo -->
+  <img src="https://res.cloudinary.com/dujc4iuu8/image/upload/v1770675269/yjhegkbvrwnunjgwsja5.png" alt="Box of Prayers Logo" width="150"/>
 
-> **Connect, Share, and Intercede.**
-> A full-stack web application connecting those in need of prayer with a community ready to intercede.
+  <!-- Title -->
+  <h1 style="color:#efbf04; margin-top: 10px;">BOX OF PRAYERS</h1>
 
-![Java](https://img.shields.io/badge/Java-ED8B00?style=for-the-badge&logo=openjdk&logoColor=white)
-![Spring Boot](https://img.shields.io/badge/Spring_Boot-6DB33F?style=for-the-badge&logo=spring-boot&logoColor=white)
-![Vue.js](https://img.shields.io/badge/Vue.js-35495E?style=for-the-badge&logo=vuedotjs&logoColor=4FC08D)
-![PostgreSQL](https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor=white)
+  <!-- Description -->
+  <p style="max-width: 600px; font-size: 18px; line-height: 1.5;">
+    Box of Prayers is a production-ready, faith-based community platform where users can submit prayer requests, engage with community content, and support one another through prayer.<br>
+    Built as a full-stack web application emphasizing clean architecture, scalability, and a mobile-first user experience.
+  </p>
 
-## 📖 About
-**Prayly** is a platform designed to foster spiritual support. It allows users to post prayer requests, receive notifications when others are praying for them, and track "Praise Reports" when prayers are answered.
+  <!-- Live Link -->
+  <p>🌐 <strong>Live Application:</strong> <a href="https://boxofprayers.com" target="_blank">https://boxofprayers.com</a></p>
 
-This project demonstrates a robust full-stack architecture using a **Java Spring Boot** backend to handle RESTful APIs and business logic, coupled with a reactive **Vue.js** frontend for a seamless user experience, all powered by a **PostgreSQL** database.
+  <!-- Tech Badges -->
+  <p>
+    <img src="https://img.shields.io/badge/Java-ED8B00?style=for-the-badge&logo=openjdk&logoColor=white" alt="Java"/>
+    <img src="https://img.shields.io/badge/Spring_Boot-6DB33F?style=for-the-badge&logo=spring-boot&logoColor=white" alt="Spring Boot"/>
+    <img src="https://img.shields.io/badge/Vue.js-35495E?style=for-the-badge&logo=vuedotjs&logoColor=4FC08D" alt="Vue.js"/>
+    <img src="https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor=white" alt="PostgreSQL"/>
+  </p>
+</div>
 
-## ✨ Features
-- **Create & Manage Requests:** Users can post public or anonymous prayer requests.
-- **Intercession Button:** A "Pray" button that increments a counter and notifies the requester.
-- **Feed Filtering:** Filter requests by category (Healing, Guidance, Family, etc.) or recency.
-- **User Dashboard:** View your prayer history and requests you are following.
-- **Praise Reports:** Mark requests as "Answered" and share the story.
+<hr/>
 
-## 🛠️ Tech Stack
+<div style="max-width: 800px; margin: auto; font-size: 16px; line-height: 1.6;">
 
-### Backend
-- **Language:** Java (JDK 17+)
-- **Framework:** Spring Boot 3.x
-- **Security:** Spring Security & JWT (JSON Web Tokens)
-- **Database:** PostgreSQL
-- **ORM:** Spring Data JDBC
+  <!-- Features -->
+  <h2>✨ Features</h2>
+  <ul>
+    <li>🕊️ Submit and view prayer requests in a supportive community</li>
+    <li>🔐 Secure user authentication and authorization</li>
+    <li>📱 Mobile-first, iOS-style responsive UI</li>
+    <li>⚡ Fast and reliable RESTful APIs</li>
+    <li>🗃️ Structured relational data with PostgreSQL</li>
+    <li>🚀 Deployed and maintained in a live production environment</li>
+  </ul>
 
-### Frontend
-- **Framework:** Vue.js 3 (Composition API)
-- **Build Tool:** Vite
-- **State Management:** Pinia
-- **Styling:** CSS
-- **HTTP Client:** Axios
+  <!-- Architecture -->
+  <h2>🏗️ Architecture Overview</h2>
+  <p>Box of Prayers follows a clean MVC + DAO architecture, separating concerns across layers for maintainability and scalability.</p>
+  <pre style="background:#f6f8fa; padding:10px; border-radius:5px;">
+Vue.js Frontend
+      ↓
+Spring Boot REST APIs
+      ↓
+DAO Layer (JdbcTemplate / SQLRowSet)
+      ↓
+PostgreSQL Database
+  </pre>
 
-## 🚀 Getting Started
+  <!-- Tech Stack -->
+  <h2>🛠️ Tech Stack</h2>
+  <h3>Backend</h3>
+  <ul>
+    <li>Java</li>
+    <li>Spring Boot & Spring Security</li>
+    <li>JdbcTemplate & SQLRowSet</li>
+    <li>RESTful APIs</li>
+    <li>MVC & DAO patterns</li>
+  </ul>
 
-### Prerequisites
-- Java JDK 17 or higher
-- Node.js & npm
-- PostgreSQL installed and running locally
-- Maven (or Gradle)
+  <h3>Frontend</h3>
+  <ul>
+    <li>Vue.js</li>
+    <li>Mobile-first responsive design</li>
+    <li>Component-based architecture</li>
+  </ul>
 
-### 1. Database Setup
-Create a PostgreSQL database named `PraylyDB` (or whatever you prefer):
-```sql
-CREATE DATABASE PraylyDB;
+  <h3>Database</h3>
+  <ul>
+    <li>PostgreSQL</li>
+    <li>Normalized relational schema</li>
+    <li>Optimized queries for performance and data integrity</li>
+  </ul>
+
+  <h3>DevOps / Deployment</h3>
+  <ul>
+    <li>Live production deployment</li>
+    <li>Environment-based configuration</li>
+    <li>Continuous iteration based on real user usage</li>
+  </ul>
+
+  <!-- Security -->
+  <h2>🔐 Security</h2>
+  <ul>
+    <li>Secure authentication and authorization workflows</li>
+    <li>Protected routes and role-based access</li>
+    <li>Backend validation and safe data handling</li>
+  </ul>
+
+  <!-- Getting Started -->
+  <h2>📦 Getting Started (Local Development)</h2>
+  <h3>Prerequisites</h3>
+  <ul>
+    <li>Java 17+</li>
+    <li>Node.js & npm</li>
+    <li>PostgreSQL</li>
+  </ul>
+
+  <h3>Backend Setup</h3>
+  <pre style="background:#f6f8fa; padding:10px; border-radius:5px;">
+git clone https://github.com/delapenagabriel/boxofprayers.git
+cd boxofprayers/server
+./mvnw spring-boot:run
+  </pre>
+
+  <h3>Frontend Setup</h3>
+  <pre style="background:#f6f8fa; padding:10px; border-radius:5px;">
+cd boxofprayers/client
+npm install
+npm run dev
+  </pre>
+
+  <h3>Environment Variables</h3>
+  <p>Create <code>.env</code> files for backend and frontend with:</p>
+  <ul>
+    <li>Database connection details</li>
+    <li>API base URLs</li>
+    <li>Security secrets</li>
+  </ul>
+
+  <!-- Motivation -->
+  <h2>🙌 Motivation</h2>
+  <p>
+    Box of Prayers was built to combine faith, technology, and community — providing a simple, safe place where people can share prayer requests and support one another.
+  </p>
+
+  <!-- License -->
+  <h2>📄 License</h2>
+  <p>This project is proprietary. Please contact the author for usage or contribution inquiries.</p>
+
+  <!-- Author -->
+  <h2>👤 Author</h2>
+  <p>
+    <strong>Gabriel Delepena</strong><br/>
+    Full-Stack Software Engineer<br/>
+    🌐 <a href="https://boxofprayers.com" target="_blank">https://boxofprayers.com</a>
+  </p>
+
+</div>
